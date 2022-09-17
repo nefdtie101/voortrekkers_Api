@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voortrekkers_api", "voortrekkers_api\voortrekkers_api.csproj", "{05DF5CA7-BBEB-4EBD-B548-D7BE86B0DF11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repos", "Repos\Repos.csproj", "{FDCC12B0-A480-4CCB-A3A6-AF1DC72F30DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseModels", "DataBaseModels\DataBaseModels.csproj", "{135A8CCE-9BE7-4C85-A6D2-B5C0FF75699A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05DF5CA7-BBEB-4EBD-B548-D7BE86B0DF11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DF5CA7-BBEB-4EBD-B548-D7BE86B0DF11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DF5CA7-BBEB-4EBD-B548-D7BE86B0DF11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DF5CA7-BBEB-4EBD-B548-D7BE86B0DF11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDCC12B0-A480-4CCB-A3A6-AF1DC72F30DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDCC12B0-A480-4CCB-A3A6-AF1DC72F30DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDCC12B0-A480-4CCB-A3A6-AF1DC72F30DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDCC12B0-A480-4CCB-A3A6-AF1DC72F30DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{135A8CCE-9BE7-4C85-A6D2-B5C0FF75699A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{135A8CCE-9BE7-4C85-A6D2-B5C0FF75699A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{135A8CCE-9BE7-4C85-A6D2-B5C0FF75699A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{135A8CCE-9BE7-4C85-A6D2-B5C0FF75699A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,6 +1,9 @@
 ﻿using DataBaseModles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Repos.Interface;
+using Voortrekkers.Pages.ResetPassword;
 
 namespace voortrekkers_api.Controllers;
 
@@ -22,11 +25,22 @@ public class LoginController : Controller
         return Ok(_loginRepo.Login(login));
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("ResetPassword")]
-    public ActionResult ResetPassword()
+    public ActionResult ResetPassword([FromBody] LoginModel login)
     {
-        return Ok(_loginRepo.resetPassword());
+        return Ok(_loginRepo.resetPassword(login));
     }
+    
+    [Authorize(Policy = "VerifyToken")]
+    [HttpPost]
+    [Route("CreatePassword")]
+    public ActionResult CreatePassword([FromBody] ResetPasswordModel pass)
+    {
+        return Ok(_loginRepo.CreatePassword(pass,HttpContext));
+    }
+    
+    
+    
     
 }

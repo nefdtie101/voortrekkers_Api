@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using Repos.Helpers;
@@ -33,7 +34,7 @@ builder.Services.AddAuthentication(auth =>
         auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     })
-    .AddJwtBearer(option =>
+    .AddJwtBearer("AccessToken", option =>
     {
         option.SaveToken = true;
         option.TokenValidationParameters = new TokenValidationParameters
@@ -43,7 +44,35 @@ builder.Services.AddAuthentication(auth =>
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWT")["Key"]))
         };
+    })
+    .AddJwtBearer("verifyToken", option =>
+    {
+        option.SaveToken = true;
+        option.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWT")["VerifyToken"]))
+        };
+
     });
+
+builder.Services.AddAuthorization(options =>
+    {
+        options.DefaultPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .AddAuthenticationSchemes("AccessToken")
+            .Build();
+
+        options.AddPolicy("VerifyToken", new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .AddAuthenticationSchemes("verifyToken")
+            .Build());
+    });
+
+
+
 
 var app = builder.Build();
 

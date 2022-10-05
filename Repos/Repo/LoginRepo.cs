@@ -40,11 +40,19 @@ public class LoginRepo : ILoginRepo
         
             if(user[0].Password == password)
             {
-                return createTokens(loginModel);
+                var tokens = createTokens(loginModel.email);
+                var filter = Builders<UserModel>.Filter.Eq("UserId", user[0].UserId);
+                var update = Builders<UserModel>.Update
+                    .Set("Token", tokens.refresh );
+                _UserCollection.UpdateOne(filter, update);
+                return tokens;
             }
             else
             {
-                return false;
+                return new JwtModel()
+                {
+                    valid = false
+                };
             }
 
         }
@@ -64,7 +72,7 @@ public class LoginRepo : ILoginRepo
             ).ToList();
             if (user.Count > 0)
             {
-                string token = VerifyToken(loginModel);
+                string token = VerifyToken(loginModel.email);
                 return  _emailHelper.sendResetPassword(user[0].Email, token, _config.GetValue<string>("DeployUriFrontend"));
             }
 
@@ -85,10 +93,10 @@ public class LoginRepo : ILoginRepo
             var user = _UserCollection.Find(o => o.Email == emialUser).ToList();
             if (user.Count > 0 && resetPassword.Password == resetPassword.RePassword)
             {
-                var filter = Builders<UserModel>.Filter.Eq("_Email", user[0]);
+                var filter = Builders<UserModel>.Filter.Eq("Email", user[0].Email);
                 var update = Builders<UserModel>.Update
                     .Set("Password",  _HashHelper.ToSHA256(resetPassword.Password));
-                _UserCollection.UpdateOne(filter,update);
+               _UserCollection.UpdateOne(filter,update);
             }
             else
             {
@@ -104,17 +112,44 @@ public class LoginRepo : ILoginRepo
         }
     }
 
-    private dynamic createTokens(LoginModel user)
+    public JwtModel refreshJwtToken(string token , string email)
+    {
+        var user = _UserCollection.Find(u =>
+            u.Email == email
+        ).ToList();
+        if (user[0].Token == token)
+        {
+            var tokens = createTokens(email);
+            var filter = Builders<UserModel>.Filter.Eq("UserId", user[0].UserId);
+            var update = Builders<UserModel>.Update
+                .Set("Token", tokens.refresh );
+            _UserCollection.UpdateOne(filter, update);
+            return tokens;
+        }
+
+        return new JwtModel()
+        {
+            valid = false
+        };
+    }
+
+    private JwtModel createTokens(string email)
     {
         var claims = new List<Claim>();
-        var token = _jwtHelper.GetJwtToken(user.email, TimeSpan.FromMinutes(10), claims.ToArray());
-        return new JwtSecurityTokenHandler().WriteToken(token);;
+        var token = new JwtSecurityTokenHandler().WriteToken(_jwtHelper.GetJwtToken(email, TimeSpan.FromSeconds(30), claims.ToArray()));
+        var refreshToken = new  JwtSecurityTokenHandler().WriteToken(_jwtHelper.GetRefreshToken(TimeSpan.FromHours(5)));
+        return new JwtModel()
+        {
+            token = token,
+            refresh = refreshToken,
+            valid = true
+        };
     }
     
-    private dynamic VerifyToken(LoginModel user)
+    private dynamic VerifyToken(string email)
     {
         var claims = new List<Claim>();
-        var token = _jwtHelper.GetResetAndVerifyToken(user.email, TimeSpan.FromMinutes(8), claims.ToArray());
+        var token = _jwtHelper.GetResetAndVerifyToken(email, TimeSpan.FromMinutes(8), claims.ToArray());
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     

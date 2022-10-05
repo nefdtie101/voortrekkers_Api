@@ -9,4 +9,6 @@ public interface ILoginRepo
     public dynamic Login(LoginModel loginModel);
     public bool resetPassword(LoginModel loginModel);
     public bool CreatePassword(ResetPasswordModel resetPassword, HttpContext http);
+
+    public JwtModel refreshJwtToken(string token, string email);
 }

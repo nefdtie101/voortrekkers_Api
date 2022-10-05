@@ -1,4 +1,6 @@
 ﻿using DataBaseModles;
+using DataBaseModles.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repos.Interface;
 
@@ -13,12 +15,26 @@ public class UserController : Controller
     {
         _userRepo = userRepo;
     }
-    
-    
+
+
+    [Authorize]
     [HttpPost]
     [Route("CreateUser")]
-    public IActionResult CreateUser([FromBody] UserModel user)
+    public ActionResult CreateUser([FromBody] UserView user)
     {
-        return Ok(_userRepo.CreateNewUser(user));
+        return Ok(_userRepo.CreateUser(user));
     }
+    
+    
+
+
+    [Authorize]
+    [HttpGet]
+    [Route("GetAllUsers")]
+    public IActionResult GetAllUsers()
+    {
+        return Ok(_userRepo.GetGetUsers());
+    }
+
+
 }

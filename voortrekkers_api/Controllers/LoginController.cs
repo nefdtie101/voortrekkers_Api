@@ -1,4 +1,5 @@
 ﻿using DataBaseModles;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -39,8 +40,30 @@ public class LoginController : Controller
     {
         return Ok(_loginRepo.CreatePassword(pass,HttpContext));
     }
-    
-    
-    
-    
+
+
+    [Authorize]
+    [HttpGet]
+    [Route("CheckToken")]
+
+    public ActionResult CheakToken()
+    {
+        return Ok(true);
+    }
+
+    [Authorize(Policy = "RefreshToken")]
+    [HttpGet]
+    [Route("Refresh")]
+
+    public async Task<ActionResult> Refresh(string email , string token)
+    {
+        
+        return Ok(_loginRepo.refreshJwtToken(token, email));
+        
+    }
+
+
+
+
+
 }

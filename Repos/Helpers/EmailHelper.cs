@@ -20,7 +20,26 @@ public class EmailHelper : IEmailHelper
                        var email = new MimeMessage();
         email.From.Add(MailboxAddress.Parse(_config.GetValue<string>("Email:Username")));
         email.To.Add(MailboxAddress.Parse(emaAddress));
-        email.Subject = "Leeuwenveld Voortrekkers herstel wagwoord";
+        email.Subject = "Leeuwenveld Staatmakers herstel wagwoord";
+        email.Body = new TextPart(TextFormat.Html) {Text = messiage};
+
+        using var smtp = new SmtpClient();
+        smtp.Connect(_config.GetValue<string>("Email:uri"), Int32.Parse(_config.GetValue<string>("Email:Port")));
+        smtp.Authenticate(_config.GetValue<string>("Email:Username"),_config.GetValue<string>("Email:Password"));
+        smtp.Send(email);
+        smtp.Disconnect(true);
+
+        return true;
+    }
+    
+    public bool VerifyUser(string emaAddress, string ResetToken , string uri  )
+    {
+        var messiage = "<p>Druk <a href="+ uri + "/ResetPassword?Key=" + ResetToken +">hier</a> om wagwoord te stel en e-pos te verifieer.";
+
+        var email = new MimeMessage();
+        email.From.Add(MailboxAddress.Parse(_config.GetValue<string>("Email:Username")));
+        email.To.Add(MailboxAddress.Parse(emaAddress));
+        email.Subject = "Leeuwenveld Staatmakers Welkom";
         email.Body = new TextPart(TextFormat.Html) {Text = messiage};
 
         using var smtp = new SmtpClient();

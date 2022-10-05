@@ -17,6 +17,10 @@ public interface IJwtHelper
         Claim[] additionalClaims = null
     );
 
+    public JwtSecurityToken GetRefreshToken(
+        TimeSpan expiration
+    );
+
     public string getJwtFromHttpHeader(HttpContext http);
     
 }

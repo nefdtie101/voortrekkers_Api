@@ -1,8 +1,11 @@
 ﻿using DataBaseModles;
+using DataBaseModles.ViewModels;
 
 namespace Repos.Interface;
 
 public interface IUserRepo
 {
-    bool CreateNewUser(UserModel user);
+    public dynamic GetGetUsers();
+
+    public bool CreateUser(UserView user);
 }

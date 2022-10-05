@@ -42,6 +42,7 @@ builder.Services.AddAuthentication(auth =>
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateIssuerSigningKey = true,
+            RequireExpirationTime = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWT")["Key"]))
         };
     })
@@ -56,7 +57,20 @@ builder.Services.AddAuthentication(auth =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWT")["VerifyToken"]))
         };
 
+    })
+    .AddJwtBearer("refreshToken", option =>
+    {
+        option.SaveToken = true;
+        option.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWT")["RefreshKey"]))
+        };
+
     });
+
 
 builder.Services.AddAuthorization(options =>
     {
@@ -68,6 +82,11 @@ builder.Services.AddAuthorization(options =>
         options.AddPolicy("VerifyToken", new AuthorizationPolicyBuilder()
             .RequireAuthenticatedUser()
             .AddAuthenticationSchemes("verifyToken")
+            .Build());
+        
+        options.AddPolicy("RefreshToken", new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .AddAuthenticationSchemes("refreshToken")
             .Build());
     });
 

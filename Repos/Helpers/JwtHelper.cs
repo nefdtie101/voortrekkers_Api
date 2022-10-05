@@ -44,6 +44,20 @@ public class JwtHelper : IJwtHelper
             signingCredentials: creds
         );
     }
+    
+    public JwtSecurityToken GetRefreshToken(
+        TimeSpan expiration
+        )
+    {
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes( _config.GetValue<string>("JWT:RefreshKey")));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        return new JwtSecurityToken(
+            expires: DateTime.UtcNow.Add(expiration),
+            signingCredentials: creds
+        );
+    }
 
     #region ResetVerify
     public JwtSecurityToken GetResetAndVerifyToken(

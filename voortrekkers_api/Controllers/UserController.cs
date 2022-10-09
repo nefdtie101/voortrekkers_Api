@@ -24,9 +24,6 @@ public class UserController : Controller
     {
         return Ok(_userRepo.CreateUser(user));
     }
-    
-    
-
 
     [Authorize]
     [HttpGet]
@@ -36,5 +33,22 @@ public class UserController : Controller
         return Ok(_userRepo.GetGetUsers());
     }
 
+    [Authorize]
+    [HttpPut]
+    [Route("UpdateUser")]
+    public ActionResult UpdateUser([FromBody] UserView user)
+    {
+        return Ok(_userRepo.EditUser(user));
+    }
+    
+    
+    [Authorize]
+    [HttpPut]
+    [Route("DeleteUser")]
+    public ActionResult DeleteUser([FromBody] UserView user)
+    {
+        return Ok(_userRepo.DeleteUser(user));
+    }
+    
 
 }

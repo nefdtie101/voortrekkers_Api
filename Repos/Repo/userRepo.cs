@@ -51,6 +51,39 @@ public class userRepo : IUserRepo
 
     }
 
+    public bool EditUser(UserView user)
+    {
+        try
+        {
+            var filter = Builders<UserModel>.Filter.Eq("UserId",  user.UserId);
+            var update = Builders<UserModel>.Update
+                .Set("FirstName", user.FirstName)
+                .Set("LastName", user.LastName);
+            _UserCollection.UpdateOne(filter,update);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    
+    public bool DeleteUser(UserView user)
+    {
+        try
+        {
+            var filter = Builders<UserModel>.Filter.Eq("UserId",  user.UserId);
+            _UserCollection.DeleteOne(filter);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
 
 
     public dynamic GetGetUsers()

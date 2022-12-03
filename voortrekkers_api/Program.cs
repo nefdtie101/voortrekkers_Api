@@ -21,6 +21,10 @@ builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 builder.Services.AddScoped<IHashHelper, HashHelper>();
 builder.Services.AddScoped<IJwtHelper, JwtHelper>();
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();
+builder.Services.AddScoped<IModuleRepo, moduleRepo>();
+builder.Services.AddScoped<IRoleRepo, RoleRepo>();
+builder.Services.AddScoped<IOrganizationRepo, OrganizationRepo>();
+builder.Services.AddScoped<IEventRepo, EventRepo>();
 
 
 builder.Services.AddSingleton<IMongoClient, MongoClient>(s =>

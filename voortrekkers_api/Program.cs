@@ -25,6 +25,9 @@ builder.Services.AddScoped<IModuleRepo, moduleRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<IOrganizationRepo, OrganizationRepo>();
 builder.Services.AddScoped<IEventRepo, EventRepo>();
+builder.Services.AddScoped<IBasicFormRepo, BasicFormRepo>();
+builder.Services.AddScoped<IBasicStudentFormRepo, BasicStudentFormRepo>();
+builder.Services.AddScoped<IEmailRepo, EmailRepo>();
 
 
 builder.Services.AddSingleton<IMongoClient, MongoClient>(s =>

@@ -8,5 +8,6 @@ public interface IOrganizationRepo
     public bool CreateOrganization(Organization org);
     public bool EditOrganization(Organization org);
     public bool Delete(Organization org);
+    public dynamic GetAllOrganizationById(string id);
 
 }

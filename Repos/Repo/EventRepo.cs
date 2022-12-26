@@ -84,4 +84,98 @@ public class EventRepo: IEventRepo
         }
     }
 
+    public dynamic GetEventByOrg(string idOrg)
+    {
+        try
+        {
+            return _EventCollection.Find(o => o.idOrganization == idOrg  && o.eventType == EventType.InterneAksie).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    
+    public dynamic GetAllGebiedAksies()
+    {
+        try
+        {
+            return _EventCollection.Find(o => o.eventType == EventType.GebiedAksie).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    
+    public dynamic GetAllSpesialeAksies()
+    {
+        try
+        {
+            return _EventCollection.Find(o => o.eventType == EventType.SpesiealeKasie).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    
+    public dynamic GetAllKampe()
+    {
+        try
+        {
+            return _EventCollection.Find(o => o.eventType == EventType.Kampe).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    
+    public dynamic GetAllKomitees()
+    {
+        try
+        {
+            return _EventCollection.Find(o => o.eventType == EventType.Komitee).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+    
+    public dynamic GetAllInteneAksies()
+    {
+        try
+        {
+            return _EventCollection.Find(o => o.eventType == EventType.InterneAksie).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
+    public string GetEventNameByEventId(string id)
+    {
+        try
+        {
+            var Event = _EventCollection.Find(o => o.IdEvent == id ).ToList();
+            return Event[0].EventName;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return "";
+        }
+    }
+    
+    
+
 }

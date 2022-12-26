@@ -76,5 +76,19 @@ public class OrganizationRepo : IOrganizationRepo
         }
     }
 
+    public dynamic GetAllOrganizationById(string id)
+    {
+        try
+        {
+            var org =_OrganizationCollection.Find(o => o.idOrganization == id).ToList();
+            return org[0];
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
 
 }

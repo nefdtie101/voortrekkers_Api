@@ -11,8 +11,17 @@ public class BasicForm
     
     public string Name { get; set; }
     
-    public string surname {get; set; }
+    public string Surname {get; set; }
+    
+    public string EMail { get; set; }
+    
+    public bool Paid { get; set; }
+    
+    public bool Attended  { get; set; }
     
     [BsonRepresentation(BsonType.ObjectId)]
     public string idOrganization { get; set; }
+    
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string IdEvent { get; set; }
 }

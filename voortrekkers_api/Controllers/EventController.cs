@@ -42,5 +42,11 @@ public class EventController : Controller
     [Route("DeleteEvent")]
     public IActionResult DeleteModule([FromBody] EventModel events)
     {
-        return Ok(_eventRepo.Delete(events));
-}    }
+        return Ok(_eventRepo.Delete(events)); 
+    }
+
+
+
+}
+
+

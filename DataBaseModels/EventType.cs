@@ -6,5 +6,5 @@ public enum EventType
     GebiedAksie = 1,
     SpesiealeKasie = 3,
     Kampe  = 4 ,
-    Komitee =5
+    Komitee = 5
 }

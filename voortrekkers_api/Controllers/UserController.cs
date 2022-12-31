@@ -17,7 +17,7 @@ public class UserController : Controller
     }
 
 
-    
+    [Authorize]
     [HttpPost]
     [Route("CreateUser")]
     public ActionResult CreateUser([FromBody] UserView user)
@@ -25,7 +25,7 @@ public class UserController : Controller
         return Ok(_userRepo.CreateUser(user));
     }
 
-    
+    [Authorize]
     [HttpGet]
     [Route("GetAllUsers")]
     public IActionResult GetAllUsers()

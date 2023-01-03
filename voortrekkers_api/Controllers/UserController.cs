@@ -17,7 +17,7 @@ public class UserController : Controller
     }
 
 
-    [Authorize]
+    
     [HttpPost]
     [Route("CreateUser")]
     public ActionResult CreateUser([FromBody] UserView user)

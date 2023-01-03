@@ -28,26 +28,33 @@ public class userRepo : IUserRepo
     }
 
 
-    public bool CreateUser(UserView user)
+    public dynamic CreateUser(UserView user)
     {
-        var users = _UserCollection.Find(o => o.Email == user.Email).ToList();
-        if (users.Count == 0)
+        try
         {
-            var newUser = new UserModel()
+            var users = _UserCollection.Find(o => o.Email == user.Email).ToList();
+            if (users.Count == 0)
             {
-                UserId = ObjectId.GenerateNewId().ToString(),
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                RoleName = user.RoleName
-            };
-            _UserCollection.InsertOne(newUser);
-            string token = VerifyToken(user.Email);
-            return  _emailHelper.sendResetPassword(user.Email, token, _config.GetValue<string>("DeployUriFrontend"));
+                var newUser = new UserModel()
+                {
+                    UserId = ObjectId.GenerateNewId().ToString(),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    RoleName = user.RoleName
+                };
+                _UserCollection.InsertOne(newUser);
+                string token = VerifyToken(user.Email);
+                return  _emailHelper.sendResetPassword(user.Email, token, _config.GetValue<string>("DeployUriFrontend"));
             
-        }
+            }
 
-        return false;
+            return false;
+        }
+        catch (Exception e)
+        {
+            return e;
+        }
 
     }
 

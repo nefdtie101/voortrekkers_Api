@@ -28,7 +28,7 @@ public class userRepo : IUserRepo
     }
 
 
-    public dynamic CreateUser(UserView user)
+    public bool CreateUser(UserView user)
     {
         try
         {
@@ -53,7 +53,8 @@ public class userRepo : IUserRepo
         }
         catch (Exception e)
         {
-            return e;
+            Console.WriteLine(e);
+            return false;
         }
 
     }

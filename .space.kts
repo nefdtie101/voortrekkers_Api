@@ -6,11 +6,7 @@
 
 job("Build and push Docker") {
     host("Build artifacts and a Docker image") {
-         shellScript {
-            content = """
-                cp -f  settings/appsettings.json  voortrekkers_Api
-            """
-        }
+         
       
 
         dockerBuildPush {

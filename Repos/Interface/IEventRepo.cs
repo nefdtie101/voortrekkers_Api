@@ -15,4 +15,5 @@ public interface IEventRepo
     public dynamic GetAllKomitees();
     public dynamic GetAllInteneAksies();
     public string GetEventNameByEventId(string id);
+    public string GetEventMessageByEventId(string id);
 }

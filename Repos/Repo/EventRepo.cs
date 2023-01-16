@@ -179,6 +179,20 @@ public class EventRepo: IEventRepo
         }
     }
     
+    public string GetEventMessageByEventId(string id)
+    {
+        try
+        {
+            var Event = _EventCollection.Find(o => o.IdEvent == id ).ToList();
+            return Event[0].Message;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return "";
+        }
+    }
+    
     
 
 }

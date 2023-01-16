@@ -99,7 +99,8 @@ public class BasicStudentFormRepo : IBasicStudentFormRepo
             };
             _emailList.AddToEmailList(newEmail);
             var Event = _event.GetEventNameByEventId(newForm.IdEvent);
-            _emailHelper.InskrywingOntvang(newForm.EMail, Event);
+            var message = _event.GetEventNameByEventId(newForm.IdEvent);
+            _emailHelper.InskrywingOntvang(newForm.EMail, Event, message);
             return true;
 
         }

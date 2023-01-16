@@ -53,16 +53,16 @@ public class EmailHelper : IEmailHelper
         return true;
     }
 
-    public bool InskrywingOntvang(string emailAddress , string eventName )
+    public bool InskrywingOntvang(string emailAddress , string eventName ,string Message )
     {
         try
         {
-            var messiage = "Baie dankie ons het jou inskrywing ontvang";  
+            
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_config.GetValue<string>("Email:Username")));
             email.To.Add(MailboxAddress.Parse(emailAddress));
             email.Subject = eventName;
-            email.Body = new TextPart(TextFormat.Text) {Text = messiage};
+            email.Body = new TextPart(TextFormat.Html) {Text = Message};
         
             using var smtp = new SmtpClient();
             smtp.Connect(_config.GetValue<string>("Email:uri"), Int32.Parse(_config.GetValue<string>("Email:Port")));

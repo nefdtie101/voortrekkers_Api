@@ -14,7 +14,7 @@ public class BasicFormRepo : IBasicFormRepo
     private readonly IMongoCollection<BasicForm> _BasicFormCollection;
 
 
-    public BasicFormRepo(IMongoClient client, IEmailRepo emailRepo, IEmailHelper emailHelper, IEventRepo events)
+    public BasicFormRepo(IMongoClient client, IEmailRepo emailRepo, IEmailHelper emailHelper, IEventRepo events )
     {
         var database = client.GetDatabase("Voories");
         _BasicFormCollection = database.GetCollection<BasicForm>("BasicForm");
@@ -102,7 +102,8 @@ public class BasicFormRepo : IBasicFormRepo
                 _emailList.MarkAsStaatmker(newForm.EMail);
             }
             var Event = _event.GetEventNameByEventId(newForm.IdEvent);
-            _emailHelper.InskrywingOntvang(newForm.EMail, Event);
+            var message = _event.GetEventNameByEventId(newForm.IdEvent);
+            _emailHelper.InskrywingOntvang(newForm.EMail, Event, message);
             return true;
 
         }

@@ -102,7 +102,7 @@ public class BasicFormRepo : IBasicFormRepo
                 _emailList.MarkAsStaatmker(newForm.EMail);
             }
             var Event = _event.GetEventNameByEventId(newForm.IdEvent);
-            var message = _event.GetEventNameByEventId(newForm.IdEvent);
+            var message = _event.GetEventMessageByEventId(newForm.IdEvent);
             _emailHelper.InskrywingOntvang(newForm.EMail, Event, message);
             return true;
 

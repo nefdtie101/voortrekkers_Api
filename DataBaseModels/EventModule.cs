@@ -21,4 +21,6 @@ public class EventModel
     public string idOrganization { get; set; }
     
     public string RedirectUri { get; set; }
+    
+    public string Message { get; set; }
 }

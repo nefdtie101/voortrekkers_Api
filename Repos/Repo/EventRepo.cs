@@ -39,7 +39,9 @@ public class EventRepo: IEventRepo
                 EventDiscription = eModel.EventDiscription,
                 EventDate = eModel.EventDate,
                 idOrganization = eModel.idOrganization,
-                RedirectUri = eModel.RedirectUri
+                RedirectUri = eModel.RedirectUri,
+                Message = eModel.Message
+                
             };
             _EventCollection.InsertOne(newEevnt);
             return true;
@@ -57,7 +59,8 @@ public class EventRepo: IEventRepo
                 .Set("EventName", eModel.EventName)
                 .Set("EventDiscription", eModel.EventDiscription)
                 .Set("EventDate", eModel.EventDate)
-                .Set("RedirectUri", eModel.RedirectUri);
+                .Set("RedirectUri", eModel.RedirectUri)
+                .Set("Message", eModel.Message);
                 
             _EventCollection.UpdateOne(filter ,update);
             return true;
